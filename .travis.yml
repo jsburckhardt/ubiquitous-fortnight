@@ -1,0 +1,9 @@
+language: bash
+
+services:
+  - docker
+
+before_install:
+- docker build . -t theapp:$(git rev-parse --verify HEAD)
+- docker run --rm -d -p 8001:8001 -t theapp:$(git rev-parse --verify HEAD)
+- docker ps -a
