@@ -50,7 +50,10 @@ func main() {
 		r.Get("/status", V1Status)
 	})
 
-	http.ListenAndServe(":3333", r)
+	err := http.ListenAndServe(":8001", r)
+	if err != nil {
+		log.Fatalf("Can't start the sever. Error: %+v", err)
+	}
 }
 
 func V1Home(w http.ResponseWriter, r *http.Request) {
@@ -64,7 +67,7 @@ func V1Status(w http.ResponseWriter, r *http.Request) {
 	// read version from first line of metadata fiile
 	file, err := os.Open("./metadata")
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Error: %+v", err)
 	}
 	defer file.Close()
 
@@ -78,7 +81,11 @@ func V1Status(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != io.EOF {
-		fmt.Printf(" > Failed!: %v\n", err)
+		log.Printf(" > Failed!: %v\n", err)
+	}
+
+	if line == "" {
+		line = "NO METADATA"
 	}
 
 	payload := fmt.Sprintf(StatusResponse, line, hash)
