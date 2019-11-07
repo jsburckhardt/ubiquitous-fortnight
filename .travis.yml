@@ -8,5 +8,6 @@ before_install:
 - docker run --rm -d -p 8001:8001 -t theapp:$(git rev-parse --verify HEAD)
 - docker ps -a
 
-scirpt:
+script:
+- echo hello
 - echo $TRAVIS_BRANCH
