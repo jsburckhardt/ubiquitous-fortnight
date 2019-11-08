@@ -4,11 +4,12 @@ Ubiquitous-fortnight is a service boilerplate for different REST APIs written in
 
 ## Getting Started
 The application contains 3 basic endpoints:
-|Enpoint| purpose |
-|-|-|
-|/ping| Keep Alive: confirm the main service is up and running.|
-|/v1| Keep Alive: confirm v1 api is up and running.|
-|/v1/status| Keep Alive: confirm v1 api is up and running with state values.|
+
+| Enpoint    | purpose                                                         |
+| ---------- | --------------------------------------------------------------- |
+| /ping      | Keep Alive: confirm the main service is up and running.         |
+| /v1        | Keep Alive: confirm v1 api is up and running.                   |
+| /v1/status | Keep Alive: confirm v1 api is up and running with state values. |
 
 ### Some details about the application:
 - Serves on port 8001
@@ -64,11 +65,12 @@ In the case of using container. The tests are executed during the container crea
 
 ## CICD
 For now the CICD is being manage in Github, Docker-Hub and Travis-Ci.
-| Utility| Details |
-|-|-|
-| Github | CI tool. Follows single trunk development being the trunk **Master** branch. |
-|Travis-CI | Orchestrator tool. Triggers builds for any code pushed into the repository (Except for **experiemental** branch). The tool at the moment only pushes containers into Docker-Hub if the build is triggered in **master** branch. Also it creates a git tag with date if the container push is successful.|
-| Docker-Hub | repository for container images.|
+
+| Utility    | Details                                                                                                                                                                                                                                                                                                 |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Github     |  CI tool. Follows single trunk development being the trunk **Master** branch.                                                                                                                                                                                                                           |
+| Travis-CI  | Orchestrator tool. Triggers builds for any code pushed into the repository (Except for **experiemental** branch). The tool at the moment only pushes containers into Docker-Hub if the build is triggered in **master** branch. Also it creates a git tag with date if the container push is successful.|
+| Docker-Hub | repository for container images.                                                                                                                                                                                                                                                                        |
 
 ## TODO:
 - Create login middleware
