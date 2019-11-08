@@ -1,13 +1,12 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
-	"io"
 	"log"
 	"net/http"
-	"os"
+
+	handler "github.com/jsburckhardt/ubiquitous-fortnight/handlers/v1"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -26,69 +25,32 @@ const StatusResponse = `{
 }
 `
 
+// ServePort is the port use by the API to serve.
+const ServePort = 8001
+
 func main() {
 	flag.Parse()
 
 	r := chi.NewRouter()
 
+	// useful middlewares for logging.
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.URLFormat)
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 
-	r.Get("/ping", getPing)
+	// Ping route to verify service is running.
+	r.Get("/ping", handler.GetPing)
 
-	// RESTy routes for "service" resource
+	// V1 routes for the service. Having versions allows modifications in APIs without affecting customers.
 	r.Route("/v1", func(r chi.Router) {
-		r.Get("/", getV1Home)
-		r.Get("/status", getV1Status)
+		r.Get("/", handler.GetV1Home)
+		r.Get("/status", handler.GetV1Status)
 	})
 
-	err := http.ListenAndServe(":8001", r)
+	err := http.ListenAndServe(fmt.Sprintf(":%v", ServePort), r)
 	if err != nil {
 		log.Fatalf("Can't start the sever. Error: %+v", err)
 	}
-}
-
-func getPing(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("pong"))
-}
-
-func getV1Home(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello world!"))
-}
-
-func getV1Status(w http.ResponseWriter, r *http.Request) {
-	// read git hash from environment variable
-	hash := os.Getenv("HASH")
-
-	// read version from first line of metadata fiile
-	file, err := os.Open("./metadata")
-	if err != nil {
-		log.Printf("Error: %+v", err)
-	}
-	defer file.Close()
-
-	reader := bufio.NewReader(file)
-	var line string
-	for {
-		line, err = reader.ReadString('\n')
-		if err != nil {
-			break
-		}
-	}
-
-	if err != io.EOF {
-		log.Printf(" > Failed!: %v\n", err)
-	}
-
-	if line == "" {
-		line = "NO METADATA"
-	}
-
-	payload := fmt.Sprintf(StatusResponse, line, hash)
-	data := []byte(payload)
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(data)
 }

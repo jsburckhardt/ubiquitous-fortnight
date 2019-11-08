@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	handler "github.com/jsburckhardt/ubiquitous-fortnight/handlers/v1"
 )
 
 func TestV1HelloWorld(t *testing.T) {
@@ -12,7 +14,7 @@ func TestV1HelloWorld(t *testing.T) {
 		t.Fatal(err)
 	}
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(getV1Home)
+	handler := http.HandlerFunc(handler.GetV1Home)
 	handler.ServeHTTP(rr, req)
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
@@ -33,7 +35,7 @@ func TestV1GetStatus(t *testing.T) {
 		t.Fatal(err)
 	}
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(getV1Status)
+	handler := http.HandlerFunc(handler.GetV1Status)
 	handler.ServeHTTP(rr, req)
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
@@ -47,7 +49,7 @@ func TestGetPing(t *testing.T) {
 		t.Fatal(err)
 	}
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(getPing)
+	handler := http.HandlerFunc(handler.GetPing)
 	handler.ServeHTTP(rr, req)
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",

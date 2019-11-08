@@ -13,3 +13,6 @@
 
 # vscode debug config
 launch.json
+
+# ignore bin folder
+bin/

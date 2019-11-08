@@ -14,8 +14,6 @@ tag:
 	git tag "$(DEPLOY_TIME)_$(HASH)"
 	git push https://${GH_TOKEN}@github.com/$(REPO_NAME) $(DEPLOY_TIME)_$(HASH)
 
-
-
 dockerpush:
 	echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
 	docker tag $(APPNAME) $(DOCKER_USERNAME)/$(APPNAME):latest

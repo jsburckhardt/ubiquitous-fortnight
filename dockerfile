@@ -3,6 +3,7 @@ FROM golang:1-alpine
 WORKDIR /go/src/app
 COPY . .
 RUN apk update && apk upgrade && apk add git && apk add --update alpine-sdk
+ENV GO111MODULE=on
 RUN go get -d -v ./...
 RUN go install -v ./...
 RUN go test -o theapp.test
