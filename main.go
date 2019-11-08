@@ -37,18 +37,12 @@ func main() {
 	r.Use(middleware.URLFormat)
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World."))
-	})
-
-	r.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("pong"))
-	})
+	r.Get("/ping", getPing)
 
 	// RESTy routes for "service" resource
 	r.Route("/v1", func(r chi.Router) {
-		r.Get("/", V1Home)
-		r.Get("/status", V1Status)
+		r.Get("/", getV1Home)
+		r.Get("/status", getV1Status)
 	})
 
 	err := http.ListenAndServe(":8001", r)
@@ -57,11 +51,15 @@ func main() {
 	}
 }
 
-func V1Home(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello World"))
+func getPing(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("pong"))
 }
 
-func V1Status(w http.ResponseWriter, r *http.Request) {
+func getV1Home(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Hello world!"))
+}
+
+func getV1Status(w http.ResponseWriter, r *http.Request) {
 	// read git hash from environment variable
 	hash := os.Getenv("HASH")
 
@@ -91,5 +89,6 @@ func V1Status(w http.ResponseWriter, r *http.Request) {
 
 	payload := fmt.Sprintf(StatusResponse, line, hash)
 	data := []byte(payload)
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
 }
