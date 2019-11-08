@@ -14,6 +14,7 @@ import (
 	"github.com/go-chi/render"
 )
 
+// StatusResponse is a template for the status endpoint.
 const StatusResponse = `{
   "myapplication": [
     {
