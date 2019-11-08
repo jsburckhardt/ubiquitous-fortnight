@@ -21,4 +21,4 @@ jobs:
         - docker ps -a
     - stage: DockerPush
       script: 
-        - make dockerpush tag        
+        - make dockerbuild dockerpush tag        
