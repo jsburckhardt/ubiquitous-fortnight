@@ -7,11 +7,18 @@ language: bash
 services:
   - docker
 
-before_install:
-- docker build . -t theapp:latest
-- docker run --rm -d -p 8001:8001 -t theapp:latest
-- docker ps -a
+stages:
+  - DockerBuild
+  - name: DockerPush
+    if: branch = master
 
-script:
-- if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
-  make dockerpush tag; fi
+jobs:
+  include:
+    - stage: DockerBuild
+      script: 
+        - docker build . -t theapp:latest
+        - docker run --rm -d -p 8001:8001 -t theapp:latest
+        - docker ps -a
+    - stage: DockerPush
+      script: 
+        - make dockerpush tag        
