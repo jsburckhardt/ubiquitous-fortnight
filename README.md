@@ -78,3 +78,4 @@ For now the CICD is being manage in Github, Docker-Hub and Travis-Ci.
 - Create changelog using husky
 - Expose test results
 - Use viper to include configurations
+- [semantic-release](https://github.com/semantic-release/semantic-release). Semantic-release coupled with [commitizen](https://github.com/commitizen/cz-cli) and [cz-conventional-changelog](https://github.com/commitizen/cz-conventional-changelog) allow us to get and automated semantic versioning
