@@ -10,4 +10,4 @@ before_install:
 
 script:
 - if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
-  make dockerpush; 
+  make dockerpush; fi
