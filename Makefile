@@ -9,7 +9,7 @@ dockerrun: dockerbuild
 
 dockerpush:
 	echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
-	docker tag $(APPNAME) $(USER_NAME)/$(APPNAME):latest
-	docker tag $(APPNAME) $(USER_NAME)/$(APPNAME):$(HASH)
-	docker push $(USER_NAME)/$(APPNAME):latest
-	docker push $(USER_NAME)/$(APPNAME):$(SHA)
+	docker tag $(APPNAME) $(DOCKER_USERNAME)/$(APPNAME):latest
+	docker tag $(APPNAME) $(DOCKER_USERNAME)/$(APPNAME):$(HASH)
+	docker push $(DOCKER_USERNAME)/$(APPNAME):latest
+	docker push $(DOCKER_USERNAME)/$(APPNAME):$(SHA)
