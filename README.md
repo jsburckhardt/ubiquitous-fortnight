@@ -1,6 +1,7 @@
 # ubiquitous-fortnight
 Ubiquitous-fortnight is a service boilerplate for different REST APIs written in go.
 
+[![Build Status](https://travis-ci.org/jsburckhardt/ubiquitous-fortnight.svg?branch=master)](https://travis-ci.org/jsburckhardt/ubiquitous-fortnight)
 
 ## Getting Started
 The application contains 3 basic endpoints:
