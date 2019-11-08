@@ -10,7 +10,7 @@ services:
 stages:
   - DockerBuild
   - name: DockerPush
-    if: branch = master
+    if: branch = master and NOT type pull_request
 
 jobs:
   include:
