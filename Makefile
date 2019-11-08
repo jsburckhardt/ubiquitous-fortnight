@@ -12,4 +12,4 @@ dockerpush:
 	docker tag $(APPNAME) $(DOCKER_USERNAME)/$(APPNAME):latest
 	docker tag $(APPNAME) $(DOCKER_USERNAME)/$(APPNAME):$(HASH)
 	docker push $(DOCKER_USERNAME)/$(APPNAME):latest
-	docker push $(DOCKER_USERNAME)/$(APPNAME):$(SHA)
+	docker push $(DOCKER_USERNAME)/$(APPNAME):$(HASH)
